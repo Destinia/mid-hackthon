@@ -1,0 +1,8 @@
+feature
+
+animate
+
+end game show all perchased card of winner
+
+draw card 
+
