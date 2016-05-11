@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import io from 'socket.io-client';
 import Desk from './desk';
+import Token from './Token';
 const socket = io('',{path:'/api/game'});
 
+
+import "./BoardApp.css"
 
 class BoardApp extends React.Component {
 	constructor(props,context){
@@ -45,20 +48,26 @@ class BoardApp extends React.Component {
 	}
 	render(){
 		return (
-		<div className="container">
-			<div className="row">
+		<div className="background">
+		<div className="container-fluid">
+			<div className="row desk-region">
 				<div className="col-sm-2">
 					<button onClick={this.perchase.bind(this)}>test</button>
 				</div>
-				<div className="col-sm-9">
-				<Desk/>
+				<div className="col-sm-6">
+					<Desk/>
 				</div>
-				<div className="col-sm-1">
+				<div className="col-sm-2">
+
+				</div>
+				<div className="col-sm-2">
+					<Token/>
 				</div>
 				
 			</div>
-			<div className="row">
+			<div className="row user-region">
 			</div>
+		</div>
 		</div>
 		);
 	}

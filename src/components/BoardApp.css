@@ -1,0 +1,14 @@
+.background {
+	margin-left: 0;
+	margin-right: 0;
+	height: 100vh;
+	background-image: url(/public/background.jpg);
+}
+
+.desk-region{
+	height: 80vh;
+}
+
+.user-region{
+	height: 20vh;
+}

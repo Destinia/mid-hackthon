@@ -3,7 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import './cards.css'
 
 class Desk extends React.Component {
-
+	constructor(props,context){
+		super(props,context);
+	}
 
 
 	createCard(card) {
@@ -40,12 +42,6 @@ class Desk extends React.Component {
             			</a>
         			</li>
         			<li>
-            			<a className="card" href="#">
-                			<span className="rank">2</span>
-                			<span className="suit">&diams;</span>
-            			</a>
-					</li>
-					<li>
             			<a className="card" href="#">
                 			<span className="rank">2</span>
                 			<span className="suit">&diams;</span>
