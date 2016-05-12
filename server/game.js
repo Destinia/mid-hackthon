@@ -11,8 +11,7 @@
 	{type:"Diamond",score:1,price:{token}}
 	
 */
-
-
+exports = module.exports = function createGame()
 
 {
 	token = () => {return {Emerald:0,Sapphire:0,Ruby:0,Diamond:0,Agate:0,Gold:0}}
@@ -81,6 +80,20 @@
 			cur_token[key] += price[key];
 		}
 	};
+
+
+	//return method
+	return {
+		next_turn:next_turn,
+		get_cur_card:get_cur_card,
+		get_cur_token:get_cur_token,
+		take_card:take_card,
+		checkout:checkout,
+		score:score,
+		draw_card:draw_card,
+		take_token:take_token
+
+	}
 
 	
 

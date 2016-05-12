@@ -36,19 +36,19 @@ class Desk extends React.Component {
 				<ul className="table">
 					{this.createCard(test_card)}
 					<li>
-            			<a className="card" href="#">
+            			<a className="card">
                 			<span className="rank">2</span>
                 			<span className="suit">&diams;</span>
             			</a>
         			</li>
         			<li>
-            			<a className="card" href="#">
+            			<a className="card">
                 			<span className="rank">2</span>
                 			<span className="suit">&diams;</span>
             			</a>
 					</li>
 					<li>
-            			<a className="card" href="#">
+            			<a className="card">
                 			<span className="rank">2</span>
                 			<span className="suit">&diams;</span>
             			</a>

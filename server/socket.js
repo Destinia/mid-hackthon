@@ -1,4 +1,6 @@
 // Keep track of which names are used so that there are no duplicates
+var createGame = require("./Game.js");
+
 var userNames = (function () {
   var names = {};
 

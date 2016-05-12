@@ -32,6 +32,11 @@
     background-image: url(/public/card-background.jpg);
 }
 
+.playingCards .nobel {
+    height: 4.0em;
+    background-image: url(/public/nobel-background.jpg);
+}
+
 .playingCards a.card {
     text-decoration: none;
 }
@@ -115,6 +120,10 @@
 
 .playingCards .card .suit .price {
     font-size: 0.75em;
+}
+
+.playingCards .nobel .rank {
+    color:#DDDDFF;
 }
 
 /*for gem
