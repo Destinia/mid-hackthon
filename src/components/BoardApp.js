@@ -36,6 +36,14 @@ class BoardApp extends React.Component {
 				Agate:0,
 				Gold:0
 			},
+			user_token:{
+				Emerald:0,
+				Sapphire:0,
+				Ruby:0,
+				Diamond:0,
+				Agate:0,
+				Gold:0
+			},
 			players:{
 				
 			},
@@ -54,19 +62,38 @@ class BoardApp extends React.Component {
 
 	componentDidMount() {
 		socket.on('init',this.init.bind(this));
+		socker.on('drawcard',this.draw_card.bind(this));
   	}
 
+  	draw_card(data){
+  		console.log("yaaaaa",data);
+  		this.setState({cards:data});
+  	};
+
   	init(data){
-  		console.log(data);
   		this.setState({players:data.users,name:data.name,cards:data.cards,token:data.token});
   	}
 
 	perchase(card){
-		console.log(this.state.name);
-		socket.emit('card',{name:this.state.name,card:card});
+		var level;
+		for(var key in this.state.cards){
+			find()
+		}
+		//identify money 
+		var cur = this.state.currency;
+		cur[card.type]++;
+		this.setState({currency:cur});
+		socket.emit('card',{card:card,level:"bot"});
+	}
+
+	take_token(type){
+		var cur_token = this.state.token;
+		cur_token[type]--;
+		var usr_token = this.state.user_token;
+		usr_token[type]++;
+		this.setState({token:cur_token,user_token:usr_token});
 	}
 	render(){
-		console.log(this.state.cards);
 		return (
 		<div className="background">
 		<div className="container-fluid fix">
@@ -75,19 +102,19 @@ class BoardApp extends React.Component {
 					<button onClick={this.perchase.bind(this)}>test</button>
 				</div>
 				<div className="col-sm-5">
-					<Desk cards={this.state.cards} perchase={this.perchase}/>
+					<Desk cards={this.state.cards} perchase={this.perchase.bind(this)}/>
 				</div>
 				<div className="col-sm-3">
 					<Nobel nobel={this.state.cards.nobel}/>
 				</div>
 				<div className="col-sm-2">
-					<Token token={this.state.token}/>
+					<Token token={this.state.token} take_token={this.take_token.bind(this)}/>
 				</div>
 				
 			</div>
 			<div className="row user-region">
 			<div className="container-fluid">
-				<Hand/>
+				<Hand currency={this.state.currency} user_token={this.state.user_token}/>
 			</div>
 			</div>
 		</div>

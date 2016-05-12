@@ -71,7 +71,9 @@ exports = module.exports = function (io) {
     });
 
     socket.on('card', function(data){
-      console.log(data);
+      console.log("here",data);
+      newGame.draw_card(data.level);
+      socket.emit('drawcard',{cards:newGame.get_cur_card()})
     });
   
     // notify other clients that a new user has joined

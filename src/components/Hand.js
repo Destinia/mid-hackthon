@@ -9,6 +9,7 @@ class Hand extends React.Component {
 	}
 
 	render(){
+		const {user_token,currency}=this.props;
 		return(
 			<div  className="row user-region">
 				<div className="col-sm-2">
@@ -17,61 +18,61 @@ class Hand extends React.Component {
 				<div className="col-sm-1 gem first">
 					<div className="currency">
 						<img src="/public/gems/emeraude.png"/>
-						<span>3</span>
+						<span>{currency.Emerald}</span>
 					</div>
 					<div className="token">
 						<img src="/public/token/emeraude.png"/>
-						<span>4</span>
+						<span>{user_token.Emerald}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
 						<img src="/public/gems/saphir.png"/>
-						<span>3</span>
+						<span>{currency.Sapphire}</span>
 					</div>
 					<div className="token">
 						<img src="/public/token/saphir.png"/>
-						<span>4</span>
+						<span>{user_token.Sapphire}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
 						<img src="/public/gems/rubis.png"/>
-						<span>3</span>
+						<span>{currency.Ruby}</span>
 					</div>
 					<div className="token">
 						<img src="/public/token/rubius.png"/>
-						<span>4</span>
+						<span>{user_token.Ruby}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
 						<img src="/public/gems/diamant.png"/>
-						<span>3</span>
+						<span>{currency.Diamond}</span>
 					</div>
 					<div className="token">
 						<img src="/public/token/diamant.png"/>
-						<span>4</span>
+						<span>{user_token.Diamond}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
 						<img src="/public/gems/onyx.png"/>
-						<span>3</span>
+						<span>{currency.Agate}</span>
 					</div>
 					<div className="token">
 						<img src="/public/token/onyx.png"/>
-						<span>4</span>
+						<span>{user_token.Agate}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
 						<img src="/public/gems/or.png"/>
-						<span>3</span>
+						<span>{currency.Gold}</span>
 					</div>
 					<div className="token">
 						<img src="/public/token/gold.png"/>
-						<span>4</span>
+						<span>{user_token.Gold}</span>
 					</div>
 				</div>
 
