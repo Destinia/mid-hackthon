@@ -50,6 +50,11 @@ var userNames = (function () {
   };
 }());
 
+var newGame = createGame();
+newGame.init_draw();
+console.log(newGame.get_cur_card());
+
+
 
 exports = module.exports = function (io) {
 
@@ -60,7 +65,9 @@ exports = module.exports = function (io) {
     // send the new user their name and a list of users
     socket.emit('init', {
       name: name,
-      users: userNames.get()
+      users: userNames.get(),
+      cards: newGame.get_cur_card(),
+      token: newGame.get_cur_token()
     });
 
     socket.on('card', function(data){

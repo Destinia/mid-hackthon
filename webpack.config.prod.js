@@ -26,7 +26,7 @@ module.exports = {
     ]}, {
       test: /\.json$/,
       loaders: ['json-loader'],
-      include: path.join(__dirname, 'src')
+      include: path.join(__dirname, 'server')
     }], 
   },
   plugins: [

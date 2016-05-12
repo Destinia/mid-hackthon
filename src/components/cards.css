@@ -122,8 +122,17 @@
     font-size: 0.75em;
 }
 
-.playingCards .nobel .rank {
+.playingCards .nobel .rank,
+.playingCards .nobel .suit {
     color:#DDDDFF;
+}
+
+.playingCards .card .rank img {
+    position: absolute;
+    top:-5%;
+    right: 0px;
+    width: 50%;
+    float:right;
 }
 
 /*for gem

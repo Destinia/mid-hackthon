@@ -27,8 +27,7 @@ module.exports = {
             'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
     ]}, {
       test: /\.json$/,
-      loaders: ['json-loader'],
-      include: path.join(__dirname, 'src')
+      loaders: ['json-loader']
     }
     ],
   },

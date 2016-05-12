@@ -9,31 +9,33 @@ class Token extends React.Component {
 	}
 
 	render(){
+		const token = this.props.token;
+		console.log(token);
 		return(
 			<div className="fullHeight">
 				<div className="token">
 					<img src="/public/token/emeraude.png"/>
-					<span className="token-count">3</span>
+					<span className="token-count">{token.Emerald}</span>
 				</div>
 				<div className="token">
 					<img src="/public/token/saphir.png"/>
-					<span className="token-count">3</span>
+					<span className="token-count">{token.Sapphire}</span>
 				</div>
 				<div className="token">
 					<img src="/public/token/rubius.png"/>
-					<span className="token-count">3</span>
+					<span className="token-count">{token.Ruby}</span>
 				</div>
 				<div className="token">
 					<img src="/public/token/diamant.png"/>
-					<span className="token-count">3</span>
+					<span className="token-count">{token.Diamond}</span>
 				</div>
 				<div className="token">
 					<img src="/public/token/onyx.png"/>
-					<span className="token-count">3</span>
+					<span className="token-count">{token.Agate}</span>
 				</div>
 				<div className="token">
 					<img src="/public/token/gold.png"/>
-					<span className="token-count">3</span>
+					<span className="token-count">{token.Gold}</span>
 				</div>
 
 				<div>

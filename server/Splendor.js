@@ -1,3 +1,5 @@
+module.export = function() {
+	return(
 {
 bot:
 [
@@ -110,7 +112,8 @@ Nobel:
 {price:{Diamond:3,Sapphire:3,Emerald:3,Ruby:0,Agate:0},score:3},
 {price:{Diamond:0,Sapphire:0,Emerald:3,Ruby:3,Agate:3},score:3},
 {price:{Diamond:4,Sapphire:4,Emerald:0,Ruby:0,Agate:0},score:3}
-}
 ]
+}
+);
 }
 

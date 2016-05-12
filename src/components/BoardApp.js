@@ -20,13 +20,21 @@ class BoardApp extends React.Component {
 		this.state = {
 			cur_player:false,
 			name:"",
-			currency:{
+			token:{
 				Emerald:7,
 				Sapphire:7,
 				Ruby:7,
 				Diamond:7,
 				Agate:7,
 				Gold:5
+			},
+			currency:{
+				Emerald:0,
+				Sapphire:0,
+				Ruby:0,
+				Diamond:0,
+				Agate:0,
+				Gold:0
 			},
 			players:{
 				
@@ -50,12 +58,12 @@ class BoardApp extends React.Component {
 
   	init(data){
   		console.log(data);
-  		this.setState({players:data.users,name:data.name,cards:data.cards});
+  		this.setState({players:data.users,name:data.name,cards:data.cards,token:data.token});
   	}
 
-	perchase(){
+	perchase(card){
 		console.log(this.state.name);
-		socket.emit('card',{name:this.state.name});
+		socket.emit('card',{name:this.state.name,card:card});
 	}
 	render(){
 		console.log(this.state.cards);
@@ -67,13 +75,13 @@ class BoardApp extends React.Component {
 					<button onClick={this.perchase.bind(this)}>test</button>
 				</div>
 				<div className="col-sm-5">
-					<Desk/>
+					<Desk cards={this.state.cards} perchase={this.perchase}/>
 				</div>
 				<div className="col-sm-3">
-					<Nobel/>
+					<Nobel nobel={this.state.cards.nobel}/>
 				</div>
 				<div className="col-sm-2">
-					<Token/>
+					<Token token={this.state.token}/>
 				</div>
 				
 			</div>
