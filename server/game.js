@@ -34,8 +34,9 @@ exports = module.exports = function createGame()
 
 
 	var next_turn = () => {return (cur_user===3)? 0:++cur_user;};
-	var get_cur_card = () => {return cur_card;};
+	var get_cur_card = () => {return {top:cur_card.top,mid:cur_card.mid,bot:cur_card.bot};};
 	var get_cur_token = () => {return cur_token;};
+	var get_nobel = () => {return cur_card.nobel;};
 
 	var init_draw = () => {
 		cur_card = {
@@ -48,10 +49,10 @@ exports = module.exports = function createGame()
 
 	//TODO front_end render no card(null)
 	var take_card = (pos,index,price) => {
-		checkout(cur_card[pos][index]);
-		score(cur_card[pos][index]);
+		//checkout(cur_card[pos][index]);
+		//score(cur_card[pos][index]);
 		cur_card[pos][index] = draw_card(pos);
-		token_back(price);
+		//token_back(price);
 	};
 	//do server need to know price?
 	var checkout = (card) => {
@@ -103,6 +104,7 @@ exports = module.exports = function createGame()
 		next_turn:next_turn,
 		get_cur_card:get_cur_card,
 		get_cur_token:get_cur_token,
+		get_nobel:get_nobel,
 		take_card:take_card,
 		checkout:checkout,
 		score:score,

@@ -58,23 +58,30 @@ console.log(newGame.get_cur_card());
 
 exports = module.exports = function (io) {
 
-  io.on('connection', function(socket){
+  io.sockets.on('connection', function(socket){
     var name = userNames.getGuestName();
     console.log("new user" + name);
   
     // send the new user their name and a list of users
-    socket.emit('init', {
-      name: name,
-      users: userNames.get(),
-      cards: newGame.get_cur_card(),
-      token: newGame.get_cur_token()
+    socket.on('mount', () => {
+      console.log("new user mount");
+      socket.emit('init', {
+        name: name,
+        users: userNames.get(),
+        cards: newGame.get_cur_card(),
+        token: newGame.get_cur_token(),
+        nobel: newGame.get_nobel()
+      });
     });
+
 
     socket.on('card', function(data){
       console.log("here",data);
-      newGame.draw_card(data.level);
-      socket.emit('drawcard',{cards:newGame.get_cur_card()})
+      newGame.take_card(data.level,data.index);
+      socket.emit('drawcard',{cards:newGame.get_cur_card()});
     });
+
+    //setInterval(()=>{socket.emit('test',{hey:"het"});},1000)
   
     // notify other clients that a new user has joined
     socket.broadcast.emit('user:join', {
@@ -97,7 +104,7 @@ exports = module.exports = function (io) {
   
         name = data.name;
         
-        socket.broadcast.emit('change:name', {
+        iosocket.broadcast.emit('change:name', {
           oldName: oldName,
           newName: name
         });

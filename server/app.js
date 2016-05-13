@@ -11,10 +11,6 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 
-app.use('/api', api);
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
-});
 
 
 // error handlers
@@ -44,7 +40,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 
 /* Start server */
 
-const server = app.listen(8080,function(){
+const server = app.listen(8080,'localhost',function(){
   console.log("API server on");
 })
 

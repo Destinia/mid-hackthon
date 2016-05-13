@@ -4,7 +4,7 @@ import Desk from './desk';
 import Token from './Token';
 import Hand from './Hand';
 import Nobel from './nobel';
-const socket = io('',{path:'/api/game'});
+const socket = io('localhost:8080',{path:'/api/game'});
 
 
 import "./BoardApp.css"
@@ -18,6 +18,7 @@ class BoardApp extends React.Component {
 		}
 
 		this.state = {
+			inited:false,
 			cur_player:false,
 			name:"",
 			token:{
@@ -61,20 +62,23 @@ class BoardApp extends React.Component {
 
 
 	componentDidMount() {
+		socket.emit('mount',{});
 		socket.on('init',this.init.bind(this));
-		socker.on('drawcard',this.draw_card.bind(this));
+		socket.on('drawcard',this.draw_card.bind(this));
+		socket.on('test',(data)=>{console.log(data);})
   	}
 
   	draw_card(data){
   		console.log("yaaaaa",data);
-  		this.setState({cards:data});
+  		this.setState({cards:data.cards});
   	};
 
   	init(data){
-  		this.setState({players:data.users,name:data.name,cards:data.cards,token:data.token});
+  		console.log(data);
+  		this.setState({inited:true,players:data.users,name:data.name,cards:data.cards,token:data.token,nobel:data.nobel});
   	}
 
-	perchase(card){
+	perchase(card,index){
 		var level;
 		for(var key in this.state.cards){
 			find()
@@ -83,7 +87,7 @@ class BoardApp extends React.Component {
 		var cur = this.state.currency;
 		cur[card.type]++;
 		this.setState({currency:cur});
-		socket.emit('card',{card:card,level:"bot"});
+		socket.emit('card',{card:card,level:card.level,index:index});
 	}
 
 	take_token(type){
@@ -94,32 +98,41 @@ class BoardApp extends React.Component {
 		this.setState({token:cur_token,user_token:usr_token});
 	}
 	render(){
-		return (
-		<div className="background">
-		<div className="container-fluid fix">
-			<div className="row desk-region">
-				<div className="col-sm-2">
-					<button onClick={this.perchase.bind(this)}>test</button>
+		if(this.state.inited){
+			return (
+			<div className="background">
+			<div className="container-fluid fix">
+				<div className="row desk-region">
+					<div className="col-sm-2">
+						<button onClick={this.perchase.bind(this)}>test</button>
+					</div>
+					<div className="col-sm-5">
+						<Desk cards={this.state.cards} perchase={this.perchase.bind(this)}/>
+					</div>
+					<div className="col-sm-3">
+						<Nobel nobel={this.state.nobel}/>
+					</div>
+					<div className="col-sm-2">
+						<Token token={this.state.token} take_token={this.take_token.bind(this)}/>
+					</div>
+					
 				</div>
-				<div className="col-sm-5">
-					<Desk cards={this.state.cards} perchase={this.perchase.bind(this)}/>
+				<div className="row user-region">
+				<div className="container-fluid">
+					<Hand currency={this.state.currency} user_token={this.state.user_token}/>
 				</div>
-				<div className="col-sm-3">
-					<Nobel nobel={this.state.cards.nobel}/>
 				</div>
-				<div className="col-sm-2">
-					<Token token={this.state.token} take_token={this.take_token.bind(this)}/>
-				</div>
-				
 			</div>
-			<div className="row user-region">
-			<div className="container-fluid">
-				<Hand currency={this.state.currency} user_token={this.state.user_token}/>
 			</div>
-			</div>
-		</div>
-		</div>
-		);
+			);
+		}
+		else {
+			return (
+				<div className="background">
+					<h1>Loading...</h1>
+				</div>
+				);
+		}
 	}
 
 }

@@ -7,8 +7,8 @@ class Desk extends React.Component {
 		super(props,context);
 	}
 
-	
-	createCard(card) {
+
+	createCard(card,index) {
 
 		const {perchase} = this.props;
 		var renderToken = (token) => {
@@ -26,7 +26,7 @@ class Desk extends React.Component {
 		}
 		return(
 			<li>
-				<a className="card" onClick={perchase.bind(this,card)}>
+				<a className="card" onClick={perchase.bind(this,card,index)}>
 					<span className="rank">
 						<span>{card.score}</span>
 						<img src={"/public/card-type/"+card.type+".png"}/>

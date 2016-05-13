@@ -5,6 +5,11 @@
 	background-image: url(/public/background.jpg);
 }
 
+.background h1 {
+	color:#FFF;
+	align: center;
+}
+
 .desk-region{
 	height: 80vh;
 }
