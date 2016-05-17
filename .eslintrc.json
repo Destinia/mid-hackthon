@@ -1,7 +1,15 @@
 {
   "parser": "babel-eslint",
   "extend": "airbnb",
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
   "rules": {
     "react/prefer-stateless-function": 0
-  }
+  },
+  "plugins": [
+    "react"
+  ]
 }

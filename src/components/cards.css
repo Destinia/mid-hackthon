@@ -10,6 +10,12 @@
 /* card itself
 ********************************************************************/
 
+/*
+origin
+    width: 3.3em;
+    height: 4.6em;
+*/
+
 .playingCards .card {
     display: inline-block;
     width: 3.3em;
@@ -45,6 +51,10 @@
 .playingCards label.card:hover,
 .playingCards strong .card {
     bottom: 1em;
+}
+/* check card afforded */
+.playingCards a.shortage:hover {
+    opacity: 0.3;
 }
 .playingCards label.card {
     cursor: pointer;

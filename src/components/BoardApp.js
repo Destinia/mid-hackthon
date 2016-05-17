@@ -21,6 +21,8 @@ class BoardApp extends React.Component {
 			inited:false,
 			cur_player:false,
 			name:"",
+			score:0,
+			token_taked:[],
 			token:{
 				Emerald:7,
 				Sapphire:7,
@@ -65,38 +67,109 @@ class BoardApp extends React.Component {
 		socket.emit('mount',{});
 		socket.on('init',this.init.bind(this));
 		socket.on('drawcard',this.draw_card.bind(this));
-		socket.on('test',(data)=>{console.log(data);})
+		socket.on('test',(data)=>{console.log(data);});
+		socket.on('yourturn',this.yourturn.bind(this));
+		socket.on('token',this.update_token.bind(this));
   	}
 
+  	update_token(data) {
+  		this.setState({token:data.token});
+  	}
+
+  	yourturn(){
+  		console.log("myturn");
+  		this.setState({cur_player:true});
+  	}
   	draw_card(data){
   		console.log("yaaaaa",data);
-  		this.setState({cards:data.cards});
+  		this.setState({cards:data.cards,user_token:data.token});
   	};
 
   	init(data){
   		console.log(data);
-  		this.setState({inited:true,players:data.users,name:data.name,cards:data.cards,token:data.token,nobel:data.nobel});
+  		this.setState({inited:true,players:data.users,name:data.name,cards:data.cards,token:data.token,nobel:data.nobel,cur_player:data.cur_player});
   	}
 
 	perchase(card,index){
-		var level;
-		for(var key in this.state.cards){
-			find()
+		//identify money
+		if(this.state.cur_player&&this.state.token_taked.length===0&&this.checkout(card.price)){
+			var cur = this.state.currency;
+			cur[card.type]++;
+			this.setState({currency:cur,cur_player:false});
+			socket.emit('card',{card:card,level:card.level,index:index});
 		}
-		//identify money 
-		var cur = this.state.currency;
-		cur[card.type]++;
-		this.setState({currency:cur});
-		socket.emit('card',{card:card,level:card.level,index:index});
+	}
+
+	checkout(price){
+		const {user_token,currency} = this.state;
+		var owned = 0;
+		for(var key in user_token){
+			if(key!=="Gold") {
+				if(user_token[key] + currency[key]<=price[key]) {
+					owned += price[key] - user_token[key] - currency[key];
+				}
+			}
+		}
+		return (owned<=user_token["Gold"]);
 	}
 
 	take_token(type){
-		var cur_token = this.state.token;
-		cur_token[type]--;
-		var usr_token = this.state.user_token;
-		usr_token[type]++;
-		this.setState({token:cur_token,user_token:usr_token});
+		var token_taked = this.state.token_taked;
+		if(this.state.cur_player){
+			//check over?
+			switch(token_taked.length){
+				case 0:
+					if(this.state.token[type]!==0){
+						token_taked.push(type);
+						var cur_token = this.state.token;
+						cur_token[type]--;
+						var usr_token = this.state.user_token;
+						usr_token[type]++;
+						this.setState({token:cur_token,user_token:usr_token,token_taked:token_taked});
+					}
+					break;
+				case 1:
+					if(this.state.token[type]!==0){
+						if(type===token_taked[0]){
+							//token_taked.push(type);
+							var cur_token = this.state.token;
+							cur_token[type]--;
+							var usr_token = this.state.user_token;
+							usr_token[type]++;
+							socket.emit('take_token',[type]);
+							this.setState({token:cur_token,user_token:usr_token,cur_player:false,token_taked:[]});
+						}
+						else{
+							token_taked.push(type);
+							var cur_token = this.state.token;
+							cur_token[type]--;
+							var usr_token = this.state.user_token;
+							usr_token[type]++;
+							this.setState({token:cur_token,user_token:usr_token,token_taked:token_taked});
+						}
+					}
+					break;
+				case 2:
+					if(this.state.token[type]!==0){
+						if(type!==token_taked[0]&&type!==token_taked[1]){
+							token_taked.push(type);
+							var cur_token = this.state.token;
+							cur_token[type]--;
+							var usr_token = this.state.user_token;
+							usr_token[type]++;
+							socket.emit('take_token',token_taked);
+							this.setState({token:cur_token,user_token:usr_token,cur_player:false,token_taked:[]});
+						}
+					}
+					break;
+
+				default:
+					throw(err);
+					break;
+			}
+		}
 	}
+
 	render(){
 		if(this.state.inited){
 			return (
@@ -104,10 +177,10 @@ class BoardApp extends React.Component {
 			<div className="container-fluid fix">
 				<div className="row desk-region">
 					<div className="col-sm-2">
-						<button onClick={this.perchase.bind(this)}>test</button>
+						<button onClick={this.perchase.bind(this)}>{(this.state.cur_player)? "me":"others"}</button>
 					</div>
 					<div className="col-sm-5">
-						<Desk cards={this.state.cards} perchase={this.perchase.bind(this)}/>
+						<Desk cards={this.state.cards} perchase={this.perchase.bind(this)} checkout={this.checkout.bind(this)}/>
 					</div>
 					<div className="col-sm-3">
 						<Nobel nobel={this.state.nobel}/>
@@ -128,7 +201,7 @@ class BoardApp extends React.Component {
 		}
 		else {
 			return (
-				<div className="background">
+				<div className="background fix">
 					<h1>Loading...</h1>
 				</div>
 				);

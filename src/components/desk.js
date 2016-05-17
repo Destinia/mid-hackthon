@@ -10,7 +10,8 @@ class Desk extends React.Component {
 
 	createCard(card,index) {
 
-		const {perchase} = this.props;
+		const {perchase,checkout} = this.props;
+		var afforded = (checkout(card.price))? "card":"card shortage";
 		var renderToken = (token) => {
 			if(card.price[token]!=0){
 				return (<span className="suit">
@@ -26,7 +27,7 @@ class Desk extends React.Component {
 		}
 		return(
 			<li>
-				<a className="card" onClick={perchase.bind(this,card,index)}>
+				<a className={afforded} onClick={perchase.bind(this,card,index)}>
 					<span className="rank">
 						<span>{card.score}</span>
 						<img src={"/public/card-type/"+card.type+".png"}/>

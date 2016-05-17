@@ -59,18 +59,20 @@ console.log(newGame.get_cur_card());
 exports = module.exports = function (io) {
 
   io.sockets.on('connection', function(socket){
-    var name = userNames.getGuestName();
-    console.log("new user" + name);
+    var name = "";
   
     // send the new user their name and a list of users
     socket.on('mount', () => {
-      console.log("new user mount");
+      name = userNames.getGuestName();
+      newGame.add_user(socket);
+      console.log("new user ",name,"mount");
       socket.emit('init', {
         name: name,
         users: userNames.get(),
         cards: newGame.get_cur_card(),
         token: newGame.get_cur_token(),
-        nobel: newGame.get_nobel()
+        nobel: newGame.get_nobel(),
+        cur_player:(newGame.get_users().length===1)
       });
     });
 
@@ -78,7 +80,20 @@ exports = module.exports = function (io) {
     socket.on('card', function(data){
       console.log("here",data);
       newGame.take_card(data.level,data.index);
-      socket.emit('drawcard',{cards:newGame.get_cur_card()});
+      socket.emit('drawcard',{cards:newGame.get_cur_card(),token:newGame.get_cur_user().token});
+      socket.broadcast.emit('drawcard',{cards:newGame.get_cur_card()});
+      newGame.next_turn();
+      newGame.get_cur_user().socket.emit('yourturn');
+      //newGame.get_users().forEach((user)=>{user.socket.emit("test","hello");});
+
+    });
+
+    socket.on('take_token', function(data){
+      newGame.take_token(data);
+      socket.broadcast.emit('token',{token:newGame.get_cur_token()});
+      newGame.next_turn();
+      newGame.get_cur_user().socket.emit('yourturn');
+
     });
 
     //setInterval(()=>{socket.emit('test',{hey:"het"});},1000)

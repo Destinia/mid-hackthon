@@ -20,20 +20,26 @@ exports = module.exports = function createGame()
 
 {
 	token = () => {return {Emerald:0,Sapphire:0,Ruby:0,Diamond:0,Agate:0,Gold:0}}
-	user = (index) => {return {index:index,token:token(),score:0,currency:token()}}
+	var create_user = (socket) => {return {token:token(),score:0,currency:token(),socket:socket}}
 	const win = 15;
 	var cur_card = {top:[],mid:[],bot:[],nobel:[]};
 
 
-	var users = [user(0),user(1),user(2),user(3)];
+	var users = [];
 	//cur_user = 4 for win
 	var cur_user = 0;
 
 	var cur_token = {Emerald:7,Sapphire:7,Ruby:7,Diamond:7,Agate:7,Gold:5};
 	var deck = Deck;
 
+	var add_user = (socket) => {
+		users.push(create_user(socket));
+		users.forEach(function(user){console.log(user.socket.id);});
+	}
 
-	var next_turn = () => {return (cur_user===3)? 0:++cur_user;};
+	var get_users = ()=> {return users;};
+	var get_cur_user = ()=> {console.log(cur_user);return users[cur_user];};
+	var next_turn = () => {cur_user  = (cur_user===users.length-1)? 0:cur_user+1;};
 	var get_cur_card = () => {return {top:cur_card.top,mid:cur_card.mid,bot:cur_card.bot};};
 	var get_cur_token = () => {return cur_token;};
 	var get_nobel = () => {return cur_card.nobel;};
@@ -48,16 +54,34 @@ exports = module.exports = function createGame()
 	};
 
 	//TODO front_end render no card(null)
-	var take_card = (pos,index,price) => {
-		//checkout(cur_card[pos][index]);
-		//score(cur_card[pos][index]);
-		cur_card[pos][index] = draw_card(pos);
+	var take_card = (pos,index) => {
+		checkout(cur_card[pos][index]);
+		score(cur_card[pos][index]);
+		if(deck[pos].length!==0){
+			cur_card[pos][index] = draw_card(pos);
+		}
+		else{
+			cur_card[pos].splice(index,1);
+		}
 		//token_back(price);
 	};
 	//do server need to know price?
 	var checkout = (card) => {
-		if(card.type!=='none')
 		users[cur_user].currency[card.type] += 1;
+		var owned = 0;
+		for(var key in card.price){
+			if(key!=="Gold") {
+				card.price[key] -= users[cur_user].currency[key];
+				if(card.price[key]>0){
+					users[cur_user].token[key] -= card.price[key];
+				}
+				if(users[cur_user].token[key]<0){
+					owned = users[cur_user].token[key];
+					users[cur_user].token[key] = 0;
+				}
+			}
+		}
+		users[cur_user].token["Gold"] +=owned;
 	};
 
 	var score = (card) => {
@@ -77,31 +101,28 @@ exports = module.exports = function createGame()
 		return target;
 	};
 
-	var take_token = (kind1,kind2,kind3) => {
-		if(kind2) {
-			cur_token[kind1] -= 1;users[cur_user].token[kind1]+=1;
-			cur_token[kind2] -= 1;users[cur_user].token[kind2]+=1;
-			cur_token[kind3] -= 1;users[cur_user].token[kind3]+=1;
-
+	var take_token = (types) => {
+		if(types.length===3) {
+			types.forEach((type)=>{
+				cur_token[type] -= 1;users[cur_user].token[type]+=1;
+			});
 		}
-		else {
-			cur_token[kind1] -= 2;users[cur_user].token[kind1]+=2;
+		else if(types.length===1){
+			cur_token[types[0]] -= 2;users[cur_user].token[types[0]]+=2;
 		}
+		else
+			throw e;
 
 	};
 
-	var token_back = (price) => {
-		for(var key in price){
-			users[cur_user].token[key] -= price[key];
-			cur_token[key] += price[key];
-		}
-	};
 
 
 	//return method
 	return {
 		init_draw:init_draw,
 		next_turn:next_turn,
+		get_users:get_users,
+		get_cur_user:get_cur_user,
 		get_cur_card:get_cur_card,
 		get_cur_token:get_cur_token,
 		get_nobel:get_nobel,
@@ -109,7 +130,8 @@ exports = module.exports = function createGame()
 		checkout:checkout,
 		score:score,
 		draw_card:draw_card,
-		take_token:take_token
+		take_token:take_token,
+		add_user:add_user
 
 	}
 
