@@ -23,14 +23,14 @@ class Desk extends React.Component {
 		}
 
 		var img_src = (type) => {
-			return ("/public/card-type/"+type+".png");
+			return ("/public/images/card-type/"+type+".png");
 		}
 		return(
 			<li>
 				<a className={afforded} onClick={perchase.bind(this,card,index)}>
 					<span className="rank">
 						<span>{card.score}</span>
-						<img src={"/public/card-type/"+card.type+".png"}/>
+						<img src={"/public/images/card-type/"+card.type+".png"}/>
 					</span>
 					{Object.keys(card.price).map(renderToken,this)}
 				</a>

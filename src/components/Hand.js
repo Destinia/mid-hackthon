@@ -17,61 +17,61 @@ class Hand extends React.Component {
 				</div>
 				<div className="col-sm-1 gem first">
 					<div className="currency">
-						<img src="/public/gems/emeraude.png"/>
+						<img src="/public/images/gems/emeraude.png"/>
 						<span>{currency.Emerald}</span>
 					</div>
 					<div className="token">
-						<img src="/public/token/emeraude.png"/>
+						<img src="/public/images/token/emeraude.png"/>
 						<span>{user_token.Emerald}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
-						<img src="/public/gems/saphir.png"/>
+						<img src="/public/images/gems/saphir.png"/>
 						<span>{currency.Sapphire}</span>
 					</div>
 					<div className="token">
-						<img src="/public/token/saphir.png"/>
+						<img src="/public/images/token/saphir.png"/>
 						<span>{user_token.Sapphire}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
-						<img src="/public/gems/rubis.png"/>
+						<img src="/public/images/gems/rubis.png"/>
 						<span>{currency.Ruby}</span>
 					</div>
 					<div className="token">
-						<img src="/public/token/rubius.png"/>
+						<img src="/public/images/token/rubius.png"/>
 						<span>{user_token.Ruby}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
-						<img src="/public/gems/diamant.png"/>
+						<img src="/public/images/gems/diamant.png"/>
 						<span>{currency.Diamond}</span>
 					</div>
 					<div className="token">
-						<img src="/public/token/diamant.png"/>
+						<img src="/public/images/token/diamant.png"/>
 						<span>{user_token.Diamond}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
-						<img src="/public/gems/onyx.png"/>
+						<img src="/public/images/gems/onyx.png"/>
 						<span>{currency.Agate}</span>
 					</div>
 					<div className="token">
-						<img src="/public/token/onyx.png"/>
+						<img src="/public/images/token/onyx.png"/>
 						<span>{user_token.Agate}</span>
 					</div>
 				</div>
 				<div className="col-sm-1 gem">
 					<div className="currency">
-						<img src="/public/gems/or.png"/>
+						<img src="/public/images/gems/or.png"/>
 						<span>{currency.Gold}</span>
 					</div>
 					<div className="token">
-						<img src="/public/token/gold.png"/>
+						<img src="/public/images/token/gold.png"/>
 						<span>{user_token.Gold}</span>
 					</div>
 				</div>

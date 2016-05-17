@@ -35,12 +35,12 @@ origin
     -moz-box-shadow: .2em .2em .5em #333;
     -webkit-box-shadow: .2em .2em .5em #333;
     box-shadow: .2em .2em .5em #333;
-    background-image: url(/public/card-background.jpg);
+    background-image: url(/public/images/card-background.jpg);
 }
 
 .playingCards .nobel {
     height: 4.0em;
-    background-image: url(/public/nobel-background.jpg);
+    background-image: url(/public/images/nobel-background.jpg);
 }
 
 .playingCards a.card {
@@ -398,7 +398,7 @@ Emerald,Sapphire,Ruby,Diamond,Agate,Gold
     background-size: contain;
     */
 }
-
+/*
 .playingCards.faceImages .card.rank-j.diams  { background-image: url(faces/JD.gif); }
 .playingCards.faceImages .card.rank-j.hearts { background-image: url(faces/JH.gif); }
 .playingCards.faceImages .card.rank-j.spades { background-image: url(faces/JS.gif); }
@@ -418,7 +418,7 @@ Emerald,Sapphire,Ruby,Diamond,Agate,Gold
 .playingCards.simpleCards .card.rank-j,
 .playingCards.simpleCards .card.rank-q,
 .playingCards.simpleCards .card.rank-k       { background-image: none !important; }
-
+*/
 /*____________ symbols in the middle (faces as dingbat symbols) ____________*/
 
 .playingCards.simpleCards .card .suit:after,
