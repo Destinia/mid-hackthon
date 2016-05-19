@@ -17,7 +17,7 @@ module.exports = {
       include: path.join(__dirname, 'src'),
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
+      loaders: ['style', 'css'],
     } ,{
       test: /\.(jpe?g|png|gif|svg)$/i,
       loaders: [

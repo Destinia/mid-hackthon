@@ -201,8 +201,8 @@ class BoardApp extends React.Component {
 		}
 		else {
 			return (
-				<div className="background fix">
-					<h1>Loading...</h1>
+				<div className="background fix loading">
+					
 				</div>
 				);
 		}
